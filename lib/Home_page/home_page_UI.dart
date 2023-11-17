@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:pas_mobile11/Detail_Page/detail.dart';
+import 'package:pas_mobile11/Detail_Page/detail_page_UI.dart';
 import '../Component/color_component.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,7 +20,13 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: MyColors.ocean,
         actions: [
-          _Appbar(),
+          Container(
+              margin: EdgeInsets.only(left: 25),
+              child: _User()),
+          Spacer(),
+          Container(
+              margin: EdgeInsets.only(right: 25),
+              child: _SearchIcon())
         ],
       ),
       body: SingleChildScrollView(
@@ -94,25 +100,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget _Appbar(){
-  return Container(
-    height: 30,
-    width: 410,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          margin: EdgeInsets.only(left: 25),
-          child: _User(),
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 20),
-          child: _SearchIcon(),
-        ),
-      ],
-    ),
-  );
-}
 Widget _User(){
   return Container(
     child: Text(
@@ -130,24 +117,32 @@ Widget _SearchIcon(){
     ),
   );
 }
-
-
 Widget _ButtonCategory(BuildContext context) {
   return ElevatedButton(
     onPressed: () {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Center(
-            child: Container(
-              color: Colors.black26,
-              height: 200,
-              width: 200,
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
-                child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) => _Category(context, index),
+          return GestureDetector(
+            onTap: () {
+              // Close the dialog when tapped
+              Navigator.pop(context);
+            },
+            child: Center(
+              child: Container(
+                color: Colors.transparent,
+                height: double.infinity,
+                width: double.infinity,
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                  child: Text(
+                    "Category list",
+                    style: TextStyle(
+                      decoration: TextDecoration.none,
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -164,10 +159,6 @@ Widget _ButtonCategory(BuildContext context) {
     child: Text('Category'),
   );
 }
-
-
-
-
 Widget _ButtonDates(){
   return  ElevatedButton(
     onPressed: () {
@@ -485,15 +476,3 @@ Widget _NavBottom() {
   );
 }
 
-Widget _Category(BuildContext context, int index){
-  return Container(
-    child: Text(
-      "Classical",
-      style: TextStyle(
-        fontWeight: FontWeight.w600,
-        fontSize: 24,
-        color: Colors.white,
-      ),
-    ),
-  );
-}
