@@ -1,7 +1,7 @@
-import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pas_mobile11/Detail_Page/detail_page_UI.dart';
+import 'package:pas_mobile11/Profile/profile_page_UI.dart';
 import '../Component/color_component.dart';
 import 'package:get/get.dart';
 import 'home_page_controller.dart';
@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
                 padding: EdgeInsets.only(left: 25, right: 25),
                 child: Row(
                   children: [
-                    _ButtonCategory(context),
+                    _ButtonCategory(),
                     SizedBox(width: 10),
                     _ButtonDates(),
                     SizedBox(width: 10),
@@ -117,36 +117,33 @@ Widget _SearchIcon(){
     ),
   );
 }
-Widget _ButtonCategory(BuildContext context) {
+Widget _ButtonCategory() {
   return ElevatedButton(
     onPressed: () {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return GestureDetector(
-            onTap: () {
-              Get.back(result: context);
-            },
-            child: Center(
-              child: Container(
-                color: Colors.transparent,
-                height: double.infinity,
-                width: double.infinity,
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
-                  child: Text(
-                    "Category list",
-                    style: TextStyle(
-                      decoration: TextDecoration.none,
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
+      Get.dialog(
+        GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Center(
+            child: Container(
+              color: Colors.transparent,
+              height: double.infinity,
+              width: double.infinity,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                child: Text(
+                  "Category list",
+                  style: TextStyle(
+                    decoration: TextDecoration.none,
+                    fontSize: 20,
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
-          );
-        },
+          ),
+        ),
       );
     },
     style: ElevatedButton.styleFrom(
@@ -158,10 +155,10 @@ Widget _ButtonCategory(BuildContext context) {
     child: Text('Category'),
   );
 }
-Widget _ButtonDates(){
-  return  ElevatedButton(
+Widget _ButtonDates() {
+  return ElevatedButton(
     onPressed: () {
-
+      // Add logic for handling button press
     },
     style: ElevatedButton.styleFrom(
       primary: Colors.transparent,
@@ -172,10 +169,11 @@ Widget _ButtonDates(){
     child: Text('All Dates'),
   );
 }
-Widget _ButtonDistance(){
-  return  ElevatedButton(
-    onPressed: () {
 
+Widget _ButtonDistance() {
+  return ElevatedButton(
+    onPressed: () {
+      // Add logic for handling button press
     },
     style: ElevatedButton.styleFrom(
       primary: Colors.transparent,
@@ -186,6 +184,7 @@ Widget _ButtonDistance(){
     child: Text('Distance'),
   );
 }
+
 Widget _SortByTxt(){
   return Container(
     child: Text(
@@ -338,12 +337,19 @@ Widget _NavBottom() {
                   color: Colors.white,
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(right: 30),
-                child: Icon(
-                  Icons.person,
-                  size: 40,
-                  color: Colors.white,
+              InkWell(
+                onTap: () {
+                  Get.to(
+                        () => ProfilePage(),
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.only(right: 30),
+                  child: Icon(
+                    Icons.person,
+                    size: 40,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],
