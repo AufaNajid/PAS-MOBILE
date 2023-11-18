@@ -3,15 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:pas_mobile11/Detail_Page/detail_page_UI.dart';
 import '../Component/color_component.dart';
+import 'package:get/get.dart';
+import 'home_page_controller.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +18,14 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: MyColors.ocean,
         actions: [
           Container(
-              margin: EdgeInsets.only(left: 25),
-              child: _User()),
+            margin: EdgeInsets.only(left: 25),
+            child: _User(),
+          ),
           Spacer(),
           Container(
-              margin: EdgeInsets.only(right: 25),
-              child: _SearchIcon())
+            margin: EdgeInsets.only(right: 25),
+            child: _SearchIcon(),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -38,20 +37,20 @@ class _HomePageState extends State<HomePage> {
             gradient: LinearGradient(
               begin: Alignment(0.00, -1.00),
               end: Alignment(0, 1),
-              colors: [MyColors.ocean ,MyColors.background,MyColors.background, ],
+              colors: [MyColors.ocean, MyColors.background, MyColors.background],
             ),
           ),
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.only(left: 25,right: 25),
+                padding: EdgeInsets.only(left: 25, right: 25),
                 child: Row(
                   children: [
                     _ButtonCategory(context),
                     SizedBox(width: 10),
                     _ButtonDates(),
                     SizedBox(width: 10),
-                    _ButtonDistance()
+                    _ButtonDistance(),
                   ],
                 ),
               ),
@@ -90,15 +89,16 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: Container(
         color: Colors.transparent,
         width: 300,
-        margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
-          child: _NavBottom()
+          child: _NavBottom(),
         ),
       ),
     );
   }
 }
+
 
 Widget _User(){
   return Container(
@@ -125,8 +125,7 @@ Widget _ButtonCategory(BuildContext context) {
         builder: (BuildContext context) {
           return GestureDetector(
             onTap: () {
-              // Close the dialog when tapped
-              Navigator.pop(context);
+              Get.back(result: context);
             },
             child: Center(
               child: Container(
@@ -187,117 +186,6 @@ Widget _ButtonDistance(){
     child: Text('Distance'),
   );
 }
-class AutoChangingImage extends StatefulWidget {
-  @override
-  _AutoChangingImageState createState() => _AutoChangingImageState();
-}
-class _AutoChangingImageState extends State<AutoChangingImage>
-    with SingleTickerProviderStateMixin {
-  int currentIndex = 0;
-  List<String> assetImagePaths = [
-    'assets/image/theater1.jpeg',
-    'assets/image/theater2.jpeg',
-    'assets/image/theater3.png',
-  ];
-
-  late Timer timer;
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 2),
-    );
-    _changeImageWithDelay(); // Change image immediately
-    _startTimer();
-  }
-
-  void _startTimer() {
-    timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      _changeImageWithDelay();
-    });
-  }
-
-  Future<void> _changeImageWithDelay() async {
-    await Future.delayed(Duration(seconds: 0));
-    _controller.forward(from: 0.0);
-    setState(() {
-      currentIndex = (currentIndex + 1) % assetImagePaths.length;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: FadeTransition(
-        opacity: _controller,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                blurRadius: 10,
-                offset: Offset(0, 5),
-              ),
-            ],
-            image: DecorationImage(
-              image: AssetImage(assetImagePaths[currentIndex]),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    _controller.dispose();
-    super.dispose();
-  }
-}
-class SortByButton extends StatefulWidget {
-  const SortByButton({Key? key}) : super(key: key);
-
-  @override
-  State<SortByButton> createState() => _SortByButtonState();
-}
-class _SortByButtonState extends State<SortByButton> {
-  List<String> dropdownItems = ["Most Popular", "Date", "Name A-Z", "Name Z-A"];
-  String? selectedValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: DropdownButton<String>(
-        value: selectedValue,
-        borderRadius: BorderRadius.circular(20),
-        dropdownColor: MyColors.ocean,
-        underline: Container(), // Remove the underline
-        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500), // Change text color to white
-        icon: Icon(
-          Icons.arrow_drop_down,
-          color: Colors.white, // Change icon color to white
-        ),
-        items: dropdownItems.map((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        onChanged: (newValue) {
-          setState(() {
-            selectedValue = newValue!;
-          });
-        },
-      ),
-    );
-  }
-}
 Widget _SortByTxt(){
   return Container(
     child: Text(
@@ -310,23 +198,13 @@ Widget _SortByTxt(){
     ),
   );
 }
-Widget _Ticket(BuildContext context){
-  return GestureDetector(
+Widget _Ticket(BuildContext context) {
+  return InkWell(
     onTap: () {
-      Navigator.push(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => DetailPage(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(1.0, 0.0);
-            const end = Offset.zero;
-            const curve = Curves.easeInOut;
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
-            return SlideTransition(position: offsetAnimation, child: child);
-          },
-          transitionDuration: const Duration(milliseconds: 450),
-        ),
+      Get.to(
+            () => DetailPage(),
+        transition: Transition.rightToLeft,
+        duration: Duration(milliseconds: 500),
       );
     },
     child: Container(
