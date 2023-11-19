@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-TicketModel allTicketModelFromJson(String str) =>
-    TicketModel.fromJson(json.decode(str));
+TicketModel allTicketModelFromJson(String str) => TicketModel.fromJson(json.decode(str));
 
 Event ticketModelFromJson(String str) =>
     Event.fromJson(json.decode(str));
@@ -13,7 +12,6 @@ class TicketModel {
 
   factory TicketModel.fromJson(Map<String, dynamic> json) =>
       TicketModel(embedded: TicketEmbedded.fromJson(json["_embedded"]));
-
 
 }
 
@@ -33,24 +31,24 @@ class Event {
   String name, id;
   // String? info;
   Dates? dates;
-  Promoter? promoter;
+  // Promoter? promoter;
   Embedded? embedded;
   List<Image>? images;
-  List<PriceRange>? priceRanges;
-  List<Classification>? classifications;
-  Locale? locale;
+  // List<PriceRange>? priceRanges;
+  // List<Classification>? classifications;
+  // Locale? locale;
 
 
   Event({
     required this.name,
     required this.id,
     this.dates,
-    this.promoter,
+    // this.promoter,
     this.embedded,
     this.images,
-    this.priceRanges,
-    required this.classifications,
-    required this.locale,
+    // this.priceRanges,
+    // required this.classifications,
+    // required this.locale,
     // this.info,
   });
 
@@ -59,14 +57,14 @@ class Event {
     id: json["id"],
     // info: json["info"],
     dates: Dates.fromJson(json["dates"]),
-    promoter: Promoter.fromJson(json["promoter"]),
+    // promoter: Promoter.fromJson(json["promoter"]),
     embedded: Embedded.fromJson(json["_embedded"]),
     images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
-    priceRanges: (json["priceRanges"] as List<dynamic>?)
-        ?.map((x) => PriceRange.fromJson(x))
-        .toList(),
-    classifications: List<Classification>.from(json["classifications"].map((x) => Classification.fromJson(x))),
-    locale: localeValues.map[json["locale"]]!,
+    // priceRanges: (json["priceRanges"] as List<dynamic>?)
+    //     ?.map((x) => PriceRange.fromJson(x))
+    //     .toList(),
+    // classifications: List<Classification>.from(json["classifications"].map((x) => Classification.fromJson(x))),
+    // locale: localeValues.map[json["locale"]]!,
   );
 }
 

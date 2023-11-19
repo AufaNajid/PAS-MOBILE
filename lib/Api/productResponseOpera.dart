@@ -1,28 +1,28 @@
 // To parse this JSON data, do
 //
-//     final productResponseOpera = productResponseOperaFromJson(jsonString);
+//     final tIcketResponseModel = tIcketResponseModelFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-ProductResponseOpera productResponseOperaFromJson(String str) => ProductResponseOpera.fromJson(json.decode(str));
+TIcketResponseModel tIcketResponseModelFromJson(String str) => TIcketResponseModel.fromJson(json.decode(str));
 
-String productResponseOperaToJson(ProductResponseOpera data) => json.encode(data.toJson());
+String tIcketResponseModelToJson(TIcketResponseModel data) => json.encode(data.toJson());
 
-class ProductResponseOpera {
-  ProductResponseOperaEmbedded embedded;
-  ProductResponseOperaLinks links;
+class TIcketResponseModel {
+  TIcketResponseModelEmbedded embedded;
+  TIcketResponseModelLinks links;
   Page page;
 
-  ProductResponseOpera({
+  TIcketResponseModel({
     required this.embedded,
     required this.links,
     required this.page,
   });
 
-  factory ProductResponseOpera.fromJson(Map<String, dynamic> json) => ProductResponseOpera(
-    embedded: ProductResponseOperaEmbedded.fromJson(json["_embedded"]),
-    links: ProductResponseOperaLinks.fromJson(json["_links"]),
+  factory TIcketResponseModel.fromJson(Map<String, dynamic> json) => TIcketResponseModel(
+    embedded: TIcketResponseModelEmbedded.fromJson(json["_embedded"]),
+    links: TIcketResponseModelLinks.fromJson(json["_links"]),
     page: Page.fromJson(json["page"]),
   );
 
@@ -33,14 +33,14 @@ class ProductResponseOpera {
   };
 }
 
-class ProductResponseOperaEmbedded {
+class TIcketResponseModelEmbedded {
   List<Event> events;
 
-  ProductResponseOperaEmbedded({
+  TIcketResponseModelEmbedded({
     required this.events,
   });
 
-  factory ProductResponseOperaEmbedded.fromJson(Map<String, dynamic> json) => ProductResponseOperaEmbedded(
+  factory TIcketResponseModelEmbedded.fromJson(Map<String, dynamic> json) => TIcketResponseModelEmbedded(
     events: List<Event>.from(json["events"].map((x) => Event.fromJson(x))),
   );
 
@@ -54,50 +54,52 @@ class Event {
   EventType type;
   String id;
   bool test;
+  String url;
   Locale locale;
   List<Image> images;
-  Dates dates;
-  Ticketing ticketing;
-  EventLinks links;
-  String url;
   Sales sales;
+  Dates dates;
   List<Classification> classifications;
   Promoter promoter;
   List<Promoter> promoters;
+  String info;
+  String pleaseNote;
   List<PriceRange> priceRanges;
   Seatmap seatmap;
   Accessibility accessibility;
+  TicketLimit ticketLimit;
   AgeRestrictions ageRestrictions;
+  Ticketing ticketing;
+  EventLinks links;
   EventEmbedded embedded;
-  List<Outlet> outlets;
-  String info;
-  String pleaseNote;
   List<Product> products;
+  DoorsTimes doorsTimes;
 
   Event({
     required this.name,
     required this.type,
     required this.id,
     required this.test,
+    required this.url,
     required this.locale,
     required this.images,
-    required this.dates,
-    required this.ticketing,
-    required this.links,
-    required this.url,
     required this.sales,
+    required this.dates,
     required this.classifications,
     required this.promoter,
     required this.promoters,
+    required this.info,
+    required this.pleaseNote,
     required this.priceRanges,
     required this.seatmap,
     required this.accessibility,
+    required this.ticketLimit,
     required this.ageRestrictions,
+    required this.ticketing,
+    required this.links,
     required this.embedded,
-    required this.outlets,
-    required this.info,
-    required this.pleaseNote,
     required this.products,
+    required this.doorsTimes,
   });
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
@@ -105,25 +107,26 @@ class Event {
     type: eventTypeValues.map[json["type"]]!,
     id: json["id"],
     test: json["test"],
+    url: json["url"],
     locale: localeValues.map[json["locale"]]!,
     images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
-    dates: Dates.fromJson(json["dates"]),
-    ticketing: Ticketing.fromJson(json["ticketing"]),
-    links: EventLinks.fromJson(json["_links"]),
-    url: json["url"],
     sales: Sales.fromJson(json["sales"]),
+    dates: Dates.fromJson(json["dates"]),
     classifications: List<Classification>.from(json["classifications"].map((x) => Classification.fromJson(x))),
     promoter: Promoter.fromJson(json["promoter"]),
     promoters: List<Promoter>.from(json["promoters"].map((x) => Promoter.fromJson(x))),
+    info: json["info"],
+    pleaseNote: json["pleaseNote"],
     priceRanges: List<PriceRange>.from(json["priceRanges"].map((x) => PriceRange.fromJson(x))),
     seatmap: Seatmap.fromJson(json["seatmap"]),
     accessibility: Accessibility.fromJson(json["accessibility"]),
+    ticketLimit: TicketLimit.fromJson(json["ticketLimit"]),
     ageRestrictions: AgeRestrictions.fromJson(json["ageRestrictions"]),
+    ticketing: Ticketing.fromJson(json["ticketing"]),
+    links: EventLinks.fromJson(json["_links"]),
     embedded: EventEmbedded.fromJson(json["_embedded"]),
-    outlets: List<Outlet>.from(json["outlets"].map((x) => Outlet.fromJson(x))),
-    info: json["info"],
-    pleaseNote: json["pleaseNote"],
     products: List<Product>.from(json["products"].map((x) => Product.fromJson(x))),
+    doorsTimes: DoorsTimes.fromJson(json["doorsTimes"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -131,41 +134,46 @@ class Event {
     "type": eventTypeValues.reverse[type],
     "id": id,
     "test": test,
+    "url": url,
     "locale": localeValues.reverse[locale],
     "images": List<dynamic>.from(images.map((x) => x.toJson())),
-    "dates": dates.toJson(),
-    "ticketing": ticketing.toJson(),
-    "_links": links.toJson(),
-    "url": url,
     "sales": sales.toJson(),
+    "dates": dates.toJson(),
     "classifications": List<dynamic>.from(classifications.map((x) => x.toJson())),
     "promoter": promoter.toJson(),
     "promoters": List<dynamic>.from(promoters.map((x) => x.toJson())),
+    "info": info,
+    "pleaseNote": pleaseNote,
     "priceRanges": List<dynamic>.from(priceRanges.map((x) => x.toJson())),
     "seatmap": seatmap.toJson(),
     "accessibility": accessibility.toJson(),
+    "ticketLimit": ticketLimit.toJson(),
     "ageRestrictions": ageRestrictions.toJson(),
+    "ticketing": ticketing.toJson(),
+    "_links": links.toJson(),
     "_embedded": embedded.toJson(),
-    "outlets": List<dynamic>.from(outlets.map((x) => x.toJson())),
-    "info": info,
-    "pleaseNote": pleaseNote,
     "products": List<dynamic>.from(products.map((x) => x.toJson())),
+    "doorsTimes": doorsTimes.toJson(),
   };
 }
 
 class Accessibility {
   int ticketLimit;
+  String info;
 
   Accessibility({
     required this.ticketLimit,
+    required this.info,
   });
 
   factory Accessibility.fromJson(Map<String, dynamic> json) => Accessibility(
     ticketLimit: json["ticketLimit"],
+    info: json["info"],
   );
 
   Map<String, dynamic> toJson() => {
     "ticketLimit": ticketLimit,
+    "info": info,
   };
 }
 
@@ -330,28 +338,50 @@ class Status {
 }
 
 enum Code {
-  OFFSALE,
   ONSALE
 }
 
 final codeValues = EnumValues({
-  "offsale": Code.OFFSALE,
   "onsale": Code.ONSALE
 });
 
 enum Timezone {
   AMERICA_CHICAGO,
-  AMERICA_LOS_ANGELES,
+  AMERICA_INDIANAPOLIS,
   AMERICA_NEW_YORK,
-  EUROPE_BRUSSELS
+  AMERICA_PHOENIX
 }
 
 final timezoneValues = EnumValues({
   "America/Chicago": Timezone.AMERICA_CHICAGO,
-  "America/Los_Angeles": Timezone.AMERICA_LOS_ANGELES,
+  "America/Indianapolis": Timezone.AMERICA_INDIANAPOLIS,
   "America/New_York": Timezone.AMERICA_NEW_YORK,
-  "Europe/Brussels": Timezone.EUROPE_BRUSSELS
+  "America/Phoenix": Timezone.AMERICA_PHOENIX
 });
+
+class DoorsTimes {
+  DateTime localDate;
+  String localTime;
+  DateTime dateTime;
+
+  DoorsTimes({
+    required this.localDate,
+    required this.localTime,
+    required this.dateTime,
+  });
+
+  factory DoorsTimes.fromJson(Map<String, dynamic> json) => DoorsTimes(
+    localDate: DateTime.parse(json["localDate"]),
+    localTime: json["localTime"],
+    dateTime: DateTime.parse(json["dateTime"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "localDate": "${localDate.year.toString().padLeft(4, '0')}-${localDate.month.toString().padLeft(2, '0')}-${localDate.day.toString().padLeft(2, '0')}",
+    "localTime": localTime,
+    "dateTime": dateTime.toIso8601String(),
+  };
+}
 
 class EventEmbedded {
   List<Venue> venues;
@@ -376,11 +406,10 @@ class EventEmbedded {
 class Attraction {
   String name;
   AttractionType type;
-  String id;
+  Id id;
   bool test;
   String url;
   Locale locale;
-  List<String> aliases;
   List<Image> images;
   List<Classification> classifications;
   UpcomingEvents upcomingEvents;
@@ -394,7 +423,6 @@ class Attraction {
     required this.test,
     required this.url,
     required this.locale,
-    required this.aliases,
     required this.images,
     required this.classifications,
     required this.upcomingEvents,
@@ -405,11 +433,10 @@ class Attraction {
   factory Attraction.fromJson(Map<String, dynamic> json) => Attraction(
     name: json["name"],
     type: attractionTypeValues.map[json["type"]]!,
-    id: json["id"],
+    id: idValues.map[json["id"]]!,
     test: json["test"],
     url: json["url"],
     locale: localeValues.map[json["locale"]]!,
-    aliases: List<String>.from(json["aliases"].map((x) => x)),
     images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
     classifications: List<Classification>.from(json["classifications"].map((x) => Classification.fromJson(x))),
     upcomingEvents: UpcomingEvents.fromJson(json["upcomingEvents"]),
@@ -420,11 +447,10 @@ class Attraction {
   Map<String, dynamic> toJson() => {
     "name": name,
     "type": attractionTypeValues.reverse[type],
-    "id": id,
+    "id": idValues.reverse[id],
     "test": test,
     "url": url,
     "locale": localeValues.reverse[locale],
-    "aliases": List<dynamic>.from(aliases.map((x) => x)),
     "images": List<dynamic>.from(images.map((x) => x.toJson())),
     "classifications": List<dynamic>.from(classifications.map((x) => x.toJson())),
     "upcomingEvents": upcomingEvents.toJson(),
@@ -435,29 +461,29 @@ class Attraction {
 
 class ExternalLinks {
   List<Facebook> youtube;
+  List<Facebook> twitter;
   List<Facebook> facebook;
   List<Facebook> instagram;
-  List<Facebook> homepage;
 
   ExternalLinks({
     required this.youtube,
+    required this.twitter,
     required this.facebook,
     required this.instagram,
-    required this.homepage,
   });
 
   factory ExternalLinks.fromJson(Map<String, dynamic> json) => ExternalLinks(
     youtube: List<Facebook>.from(json["youtube"].map((x) => Facebook.fromJson(x))),
+    twitter: List<Facebook>.from(json["twitter"].map((x) => Facebook.fromJson(x))),
     facebook: List<Facebook>.from(json["facebook"].map((x) => Facebook.fromJson(x))),
     instagram: List<Facebook>.from(json["instagram"].map((x) => Facebook.fromJson(x))),
-    homepage: List<Facebook>.from(json["homepage"].map((x) => Facebook.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "youtube": List<dynamic>.from(youtube.map((x) => x.toJson())),
+    "twitter": List<dynamic>.from(twitter.map((x) => x.toJson())),
     "facebook": List<dynamic>.from(facebook.map((x) => x.toJson())),
     "instagram": List<dynamic>.from(instagram.map((x) => x.toJson())),
-    "homepage": List<dynamic>.from(homepage.map((x) => x.toJson())),
   };
 }
 
@@ -476,6 +502,18 @@ class Facebook {
     "url": url,
   };
 }
+
+enum Id {
+  K8_V_Z917_BO_LF,
+  K8_V_Z917_C_IF,
+  K8_V_Z917_HEK_V
+}
+
+final idValues = EnumValues({
+  "K8vZ917boLf": Id.K8_V_Z917_BO_LF,
+  "K8vZ917C-If": Id.K8_V_Z917_C_IF,
+  "K8vZ917hekV": Id.K8_V_Z917_HEK_V
+});
 
 class Image {
   Ratio ratio;
@@ -570,38 +608,30 @@ final attractionTypeValues = EnumValues({
 });
 
 class UpcomingEvents {
+  int tmr;
   int ticketmaster;
   int total;
   int filtered;
-  int tmr;
-  int ticketnet;
-  int mfxBe;
 
   UpcomingEvents({
+    required this.tmr,
     required this.ticketmaster,
     required this.total,
     required this.filtered,
-    required this.tmr,
-    required this.ticketnet,
-    required this.mfxBe,
   });
 
   factory UpcomingEvents.fromJson(Map<String, dynamic> json) => UpcomingEvents(
+    tmr: json["tmr"],
     ticketmaster: json["ticketmaster"],
     total: json["_total"],
     filtered: json["_filtered"],
-    tmr: json["tmr"],
-    ticketnet: json["ticketnet"],
-    mfxBe: json["mfx-be"],
   );
 
   Map<String, dynamic> toJson() => {
+    "tmr": tmr,
     "ticketmaster": ticketmaster,
     "_total": total,
     "_filtered": filtered,
-    "tmr": tmr,
-    "ticketnet": ticketnet,
-    "mfx-be": mfxBe,
   };
 }
 
@@ -612,6 +642,7 @@ class Venue {
   bool test;
   String url;
   Locale locale;
+  List<String> aliases;
   List<Image> images;
   String postalCode;
   Timezone timezone;
@@ -622,6 +653,7 @@ class Venue {
   Location location;
   List<Genre> markets;
   List<Dma> dmas;
+  Social social;
   BoxOfficeInfo boxOfficeInfo;
   String parkingDetail;
   String accessibleSeatingDetail;
@@ -637,6 +669,7 @@ class Venue {
     required this.test,
     required this.url,
     required this.locale,
+    required this.aliases,
     required this.images,
     required this.postalCode,
     required this.timezone,
@@ -647,6 +680,7 @@ class Venue {
     required this.location,
     required this.markets,
     required this.dmas,
+    required this.social,
     required this.boxOfficeInfo,
     required this.parkingDetail,
     required this.accessibleSeatingDetail,
@@ -663,6 +697,7 @@ class Venue {
     test: json["test"],
     url: json["url"],
     locale: localeValues.map[json["locale"]]!,
+    aliases: List<String>.from(json["aliases"].map((x) => x)),
     images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
     postalCode: json["postalCode"],
     timezone: timezoneValues.map[json["timezone"]]!,
@@ -673,6 +708,7 @@ class Venue {
     location: Location.fromJson(json["location"]),
     markets: List<Genre>.from(json["markets"].map((x) => Genre.fromJson(x))),
     dmas: List<Dma>.from(json["dmas"].map((x) => Dma.fromJson(x))),
+    social: Social.fromJson(json["social"]),
     boxOfficeInfo: BoxOfficeInfo.fromJson(json["boxOfficeInfo"]),
     parkingDetail: json["parkingDetail"],
     accessibleSeatingDetail: json["accessibleSeatingDetail"],
@@ -689,6 +725,7 @@ class Venue {
     "test": test,
     "url": url,
     "locale": localeValues.reverse[locale],
+    "aliases": List<dynamic>.from(aliases.map((x) => x)),
     "images": List<dynamic>.from(images.map((x) => x.toJson())),
     "postalCode": postalCode,
     "timezone": timezoneValues.reverse[timezone],
@@ -699,6 +736,7 @@ class Venue {
     "location": location.toJson(),
     "markets": List<dynamic>.from(markets.map((x) => x.toJson())),
     "dmas": List<dynamic>.from(dmas.map((x) => x.toJson())),
+    "social": social.toJson(),
     "boxOfficeInfo": boxOfficeInfo.toJson(),
     "parkingDetail": parkingDetail,
     "accessibleSeatingDetail": accessibleSeatingDetail,
@@ -814,22 +852,18 @@ class Country {
 }
 
 enum CountryCode {
-  BE,
   US
 }
 
 final countryCodeValues = EnumValues({
-  "BE": CountryCode.BE,
   "US": CountryCode.US
 });
 
 enum CountryName {
-  BELGIUM,
   UNITED_STATES_OF_AMERICA
 }
 
 final countryNameValues = EnumValues({
-  "Belgium": CountryName.BELGIUM,
   "United States Of America": CountryName.UNITED_STATES_OF_AMERICA
 });
 
@@ -850,22 +884,22 @@ class Dma {
 }
 
 class GeneralInfo {
-  String childRule;
   String generalRule;
+  String childRule;
 
   GeneralInfo({
-    required this.childRule,
     required this.generalRule,
+    required this.childRule,
   });
 
   factory GeneralInfo.fromJson(Map<String, dynamic> json) => GeneralInfo(
-    childRule: json["childRule"],
     generalRule: json["generalRule"],
+    childRule: json["childRule"],
   );
 
   Map<String, dynamic> toJson() => {
-    "childRule": childRule,
     "generalRule": generalRule,
+    "childRule": childRule,
   };
 }
 
@@ -886,6 +920,38 @@ class Location {
   Map<String, dynamic> toJson() => {
     "longitude": longitude,
     "latitude": latitude,
+  };
+}
+
+class Social {
+  Twitter twitter;
+
+  Social({
+    required this.twitter,
+  });
+
+  factory Social.fromJson(Map<String, dynamic> json) => Social(
+    twitter: Twitter.fromJson(json["twitter"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "twitter": twitter.toJson(),
+  };
+}
+
+class Twitter {
+  String handle;
+
+  Twitter({
+    required this.handle,
+  });
+
+  factory Twitter.fromJson(Map<String, dynamic> json) => Twitter(
+    handle: json["handle"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "handle": handle,
   };
 }
 
@@ -941,41 +1007,11 @@ class EventLinks {
   };
 }
 
-class Outlet {
-  String url;
-  OutletType type;
-
-  Outlet({
-    required this.url,
-    required this.type,
-  });
-
-  factory Outlet.fromJson(Map<String, dynamic> json) => Outlet(
-    url: json["url"],
-    type: outletTypeValues.map[json["type"]]!,
-  );
-
-  Map<String, dynamic> toJson() => {
-    "url": url,
-    "type": outletTypeValues.reverse[type],
-  };
-}
-
-enum OutletType {
-  TM_MARKET_PLACE,
-  VENUE_BOX_OFFICE
-}
-
-final outletTypeValues = EnumValues({
-  "tmMarketPlace": OutletType.TM_MARKET_PLACE,
-  "venueBoxOffice": OutletType.VENUE_BOX_OFFICE
-});
-
 class PriceRange {
   PriceRangeType type;
   Currency currency;
-  double min;
-  double max;
+  int min;
+  int max;
 
   PriceRange({
     required this.type,
@@ -987,8 +1023,8 @@ class PriceRange {
   factory PriceRange.fromJson(Map<String, dynamic> json) => PriceRange(
     type: priceRangeTypeValues.map[json["type"]]!,
     currency: currencyValues.map[json["currency"]]!,
-    min: json["min"]?.toDouble(),
-    max: json["max"]?.toDouble(),
+    min: json["min"],
+    max: json["max"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -1000,30 +1036,26 @@ class PriceRange {
 }
 
 enum Currency {
-  EUR,
   USD
 }
 
 final currencyValues = EnumValues({
-  "EUR": Currency.EUR,
   "USD": Currency.USD
 });
 
 enum PriceRangeType {
-  STANDARD,
-  STANDARD_INCLUDING_FEES
+  STANDARD
 }
 
 final priceRangeTypeValues = EnumValues({
-  "standard": PriceRangeType.STANDARD,
-  "standard including fees": PriceRangeType.STANDARD_INCLUDING_FEES
+  "standard": PriceRangeType.STANDARD
 });
 
 class Product {
   String name;
   String id;
   String url;
-  String type;
+  ProductType type;
   List<Classification> classifications;
 
   Product({
@@ -1038,7 +1070,7 @@ class Product {
     name: json["name"],
     id: json["id"],
     url: json["url"],
-    type: json["type"],
+    type: productTypeValues.map[json["type"]]!,
     classifications: List<Classification>.from(json["classifications"].map((x) => Classification.fromJson(x))),
   );
 
@@ -1046,10 +1078,22 @@ class Product {
     "name": name,
     "id": id,
     "url": url,
-    "type": type,
+    "type": productTypeValues.reverse[type],
     "classifications": List<dynamic>.from(classifications.map((x) => x.toJson())),
   };
 }
+
+enum ProductType {
+  PARKING,
+  SPECIAL_ENTRY,
+  UPSELL
+}
+
+final productTypeValues = EnumValues({
+  "Parking": ProductType.PARKING,
+  "Special Entry": ProductType.SPECIAL_ENTRY,
+  "Upsell": ProductType.UPSELL
+});
 
 class Promoter {
   String id;
@@ -1076,36 +1120,74 @@ class Promoter {
 }
 
 enum Description {
+  FELD_ENTERTAINMENT_NTL_USA,
+  FELD_ENTERTAINMENT_RINGLING_BROS_NTL_USA,
+  LIVE_NATION_MUSIC_NTL_USA,
   PROMOTED_BY_VENUE_NTL_USA
 }
 
 final descriptionValues = EnumValues({
+  "FELD ENTERTAINMENT / NTL / USA": Description.FELD_ENTERTAINMENT_NTL_USA,
+  "FELD ENTERTAINMENT RINGLING BROS / NTL / USA": Description.FELD_ENTERTAINMENT_RINGLING_BROS_NTL_USA,
+  "LIVE NATION MUSIC / NTL / USA": Description.LIVE_NATION_MUSIC_NTL_USA,
   "PROMOTED BY VENUE / NTL / USA": Description.PROMOTED_BY_VENUE_NTL_USA
 });
 
 enum PromoterName {
-  PRAGUE_CLASSICS_S_R_O,
+  FELD_ENTERTAINMENT,
+  FELD_ENTERTAINMENT_RINGLING_BROS,
+  LIVE_NATION_MUSIC,
   PROMOTED_BY_VENUE
 }
 
 final promoterNameValues = EnumValues({
-  "Prague Classics s.r.o.": PromoterName.PRAGUE_CLASSICS_S_R_O,
+  "FELD ENTERTAINMENT": PromoterName.FELD_ENTERTAINMENT,
+  "FELD ENTERTAINMENT RINGLING BROS": PromoterName.FELD_ENTERTAINMENT_RINGLING_BROS,
+  "LIVE NATION MUSIC": PromoterName.LIVE_NATION_MUSIC,
   "PROMOTED BY VENUE": PromoterName.PROMOTED_BY_VENUE
 });
 
 class Sales {
   Public public;
+  List<Presale> presales;
 
   Sales({
     required this.public,
+    required this.presales,
   });
 
   factory Sales.fromJson(Map<String, dynamic> json) => Sales(
     public: Public.fromJson(json["public"]),
+    presales: List<Presale>.from(json["presales"].map((x) => Presale.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "public": public.toJson(),
+    "presales": List<dynamic>.from(presales.map((x) => x.toJson())),
+  };
+}
+
+class Presale {
+  DateTime startDateTime;
+  DateTime endDateTime;
+  String name;
+
+  Presale({
+    required this.startDateTime,
+    required this.endDateTime,
+    required this.name,
+  });
+
+  factory Presale.fromJson(Map<String, dynamic> json) => Presale(
+    startDateTime: DateTime.parse(json["startDateTime"]),
+    endDateTime: DateTime.parse(json["endDateTime"]),
+    name: json["name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "startDateTime": startDateTime.toIso8601String(),
+    "endDateTime": endDateTime.toIso8601String(),
+    "name": name,
   };
 }
 
@@ -1153,6 +1235,34 @@ class Seatmap {
   };
 }
 
+class TicketLimit {
+  Info info;
+
+  TicketLimit({
+    required this.info,
+  });
+
+  factory TicketLimit.fromJson(Map<String, dynamic> json) => TicketLimit(
+    info: infoValues.map[json["info"]]!,
+  );
+
+  Map<String, dynamic> toJson() => {
+    "info": infoValues.reverse[info],
+  };
+}
+
+enum Info {
+  THERE_IS_AN_EIGHT_8_TICKET_LIMIT_FOR_THIS_EVENT,
+  THERE_IS_AN_OVERALL_10_TICKET_LIMIT_FOR_THIS_EVENT,
+  THERE_IS_AN_OVERALL_8_TICKET_LIMIT_FOR_THIS_EVENT
+}
+
+final infoValues = EnumValues({
+  "There is an eight (8) ticket limit for this event.": Info.THERE_IS_AN_EIGHT_8_TICKET_LIMIT_FOR_THIS_EVENT,
+  "There is an overall 10 ticket limit for this event.": Info.THERE_IS_AN_OVERALL_10_TICKET_LIMIT_FOR_THIS_EVENT,
+  "There is an overall 8 ticket limit for this event.": Info.THERE_IS_AN_OVERALL_8_TICKET_LIMIT_FOR_THIS_EVENT
+});
+
 class Ticketing {
   AllInclusivePricing safeTix;
   AllInclusivePricing allInclusivePricing;
@@ -1197,20 +1307,20 @@ final eventTypeValues = EnumValues({
   "event": EventType.EVENT
 });
 
-class ProductResponseOperaLinks {
+class TIcketResponseModelLinks {
   First first;
   First self;
   First next;
   First last;
 
-  ProductResponseOperaLinks({
+  TIcketResponseModelLinks({
     required this.first,
     required this.self,
     required this.next,
     required this.last,
   });
 
-  factory ProductResponseOperaLinks.fromJson(Map<String, dynamic> json) => ProductResponseOperaLinks(
+  factory TIcketResponseModelLinks.fromJson(Map<String, dynamic> json) => TIcketResponseModelLinks(
     first: First.fromJson(json["first"]),
     self: First.fromJson(json["self"]),
     next: First.fromJson(json["next"]),

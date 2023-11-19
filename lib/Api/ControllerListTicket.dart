@@ -1,10 +1,6 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'api_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 
 class ControllerListTicket extends GetxController {
@@ -32,7 +28,7 @@ class ControllerListTicket extends GetxController {
   void loadData() async {
     try {
       final response = await http.get(Uri.parse(
-          "https://app.ticketmaster.com/discovery/v2/events.json?classificationId=KZFzniwnSyZfZ7v7na&apikey=9a0q73hG0j9Jdrbm4wQKHUvswi5qcPnN"));
+          "https://app.ticketmaster.com/discovery/v2/events.json?classificationId=KnvZfZ7v7n1&apikey=9a0q73hG0j9Jdrbm4wQKHUvswi5qcPnN"));
 
       if (response.statusCode == 200) {
         data.value = allTicketModelFromJson(response.body);

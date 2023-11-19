@@ -9,6 +9,7 @@ import 'home_page_controller.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,10 +79,13 @@ class HomePage extends StatelessWidget {
                   child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: 4,
-                    itemBuilder: _TicketList,
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: _Ticket(index, "nama Acara $index"),
                   ),
                 ),
               ),
+              )
             ],
           ),
         ),
@@ -117,47 +121,47 @@ Widget _SearchIcon(){
     ),
   );
 }
-Widget _ButtonCategory(BuildContext context) {
-  return ElevatedButton(
-    onPressed: () {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return GestureDetector(
-            onTap: () {
-              Get.back(result: context);
-            },
-            child: Center(
-              child: Container(
-                color: Colors.transparent,
-                height: double.infinity,
-                width: double.infinity,
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
-                  child: Text(
-                    "Category list",
-                    style: TextStyle(
-                      decoration: TextDecoration.none,
-                      fontSize: 20,
-                      color: Colors.white,
+  Widget _ButtonCategory(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return GestureDetector(
+              onTap: () {
+                Get.back(result: context);
+              },
+              child: Center(
+                child: Container(
+                  color: Colors.transparent,
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                    child: Text(
+                      "Category list",
+                      style: TextStyle(
+                        decoration: TextDecoration.none,
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
-      );
-    },
-    style: ElevatedButton.styleFrom(
-      primary: Colors.transparent,
-      onPrimary: Colors.white,
-      side: BorderSide(color: Colors.white, width: 1.0),
-      minimumSize: Size(100, 35),
-    ),
-    child: Text('Category'),
-  );
-}
+            );
+          },
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        primary: Colors.transparent,
+        onPrimary: Colors.white,
+        side: BorderSide(color: Colors.white, width: 1.0),
+        minimumSize: Size(100, 35),
+      ),
+      child: Text('Category'),
+    );
+  }
 Widget _ButtonDates(){
   return  ElevatedButton(
     onPressed: () {
@@ -198,7 +202,7 @@ Widget _SortByTxt(){
     ),
   );
 }
-Widget _Ticket(BuildContext context) {
+Widget _Ticket(int index, String name) {
   return InkWell(
     onTap: () {
       Get.to(
@@ -263,7 +267,7 @@ Widget _Ticket(BuildContext context) {
                 ),
                 Container(
                   child: Text(
-                    "Hamilton (Chicago)",
+                    name,
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
@@ -289,12 +293,12 @@ Widget _Ticket(BuildContext context) {
     ),
   );
 }
-Widget _TicketList(BuildContext context, int index) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 10.0),
-    child: _Ticket(context),
-  );
-}
+// Widget _TicketList(BuildContext context, int index) {
+//   return Padding(
+//     padding: const EdgeInsets.only(bottom: 10.0),
+//     child: _Ticket(context),
+//   );
+// }
 Widget _NavBottom() {
   return Container(
     color: Colors.black26,
