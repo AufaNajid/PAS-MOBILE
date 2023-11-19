@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pas_mobile11/Payment_Page/Payment.dart';
+import '../Payment_Page/payment_page_UI.dart';
 import '../Component/color_component.dart';
 
 class DetailPage extends StatelessWidget {
@@ -25,17 +25,21 @@ class DetailPage extends StatelessWidget {
         ),
         leadingWidth: double.infinity,
         leading: Container(
-          margin: EdgeInsets.only(left: 10, bottom: 10, right: 20),
+          margin: EdgeInsets.only(left: 10,right: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  _BackBtn(context),
+                  Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                      child: _BackBtn(context)),
                   _TheaterTitle(),
                 ],
               ),
-              _InfoIcn(),
+              Container(
+                  margin: EdgeInsets.only(bottom: 20),
+                  child: _InfoIcn()),
             ],
           ),
         ),
@@ -47,50 +51,8 @@ class DetailPage extends StatelessWidget {
           children: [
             _SeatingPlan(),
             Container(
-              height: 80,
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.black12,
-                    width: 1.0,
-                  ),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 15),
-                    height: 50,
-                    width: 250,
-                    child: TicketCount(),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.transparent,
-                      border: Border.all(
-                        color: MyColors.ocean,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(right: 15),
-                    height: 50,
-                    width: 110,
-                    child: _Filter(),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.transparent,
-                      border: Border.all(
-                        color: MyColors.ocean,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              child: TicketCount()
             ),
-            _SeatChooseList()
           ],
         ),
       ),
@@ -161,50 +123,121 @@ Widget _SeatingPlan() {
 }
 class TicketCount extends StatefulWidget {
   const TicketCount({Key? key}) : super(key: key);
-
   @override
   State<TicketCount> createState() => _TicketCountState();
 }
 class _TicketCountState extends State<TicketCount> {
-  List<String> dropdownItems = ["1 Ticket", "2 Ticket", "3 Ticket", "4 Ticket", "5 Ticket", "6 Ticket", "7 Ticket", "8 Ticket", "9 Ticket"];
-  String? selectedValue;
+  List<String> dropdownItems = ["1 Ticket", "2 Tickets", "3 Tickets", "4 Tickets", "5 Tickets", "6 Tickets", "7 Tickets", "8 Tickets", "9 Tickets"];
+  String selectedValue = "1 Ticket"; // Default selected value
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 15),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
         children: [
-          Text(
-            "${selectedValue ?? '1 Ticket'}",
-            style: TextStyle(color: MyColors.ocean,fontSize: 16,fontWeight: FontWeight.w500),
-          ),
-          SizedBox(width: 70.0),
           Container(
-            child: DropdownButton<String>(
-              borderRadius: BorderRadius.circular(10),
-              dropdownColor: MyColors.ocean,
-              style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w500),
-              underline: Container(),
-              icon: Icon(
-                Icons.arrow_drop_down,
-                size: 30,
-                color: MyColors.ocean,
+            height: 80,
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.black12,
+                  width: 1.0,
+                ),
               ),
-              items: dropdownItems.map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (newValue) {
-                setState(() {
-                  selectedValue = newValue!;
-                });
-              },
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 15),
+                  child: Container(
+                    height: 50,
+                    width: 250,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.transparent,
+                      border: Border.all(
+                        color: MyColors.ocean,
+                        width: 2,
+                      ),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: 10),
+                          child: Text(
+                            selectedValue,
+                            style: TextStyle(color: MyColors.ocean, fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        SizedBox(width: 50.0),
+                        Container(
+                          child: DropdownButton<String>(
+                            borderRadius: BorderRadius.circular(10),
+                            dropdownColor: MyColors.ocean,
+                            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+                            underline: Container(),
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              size: 30,
+                              color: MyColors.ocean,
+                            ),
+                            items: dropdownItems.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                selectedValue = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 15),
+                  height: 50,
+                  width: 110,
+                  child: _Filter(),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.transparent,
+                    border: Border.all(
+                      color: MyColors.ocean,
+                      width: 2,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
+          Container(
+            height: 600,
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: 11,
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  onTap: () {
+                    Get.to(
+                          () => PaymentPage(selectedValue),
+                      arguments: selectedValue,
+                      transition: Transition.rightToLeft,
+                      duration: Duration(milliseconds: 500),
+                    );
+                  },
+                  child: _SeatChoose(),
+                );
+              },
+            ),
+          )
         ],
       ),
     );
@@ -239,15 +272,7 @@ Widget _Filter(){
   );
 }
 Widget _SeatChoose(){
-  return InkWell(
-    onTap: () {
-      Get.to(
-            () => Payment_Page(),
-        transition: Transition.rightToLeft,
-        duration: Duration(milliseconds: 500),
-      );
-    },
-    child: Container(
+  return Container(
       height: 70,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -303,22 +328,9 @@ Widget _SeatChoose(){
           )
         ],
       ),
-    ),
+
   );
 }
 
-Widget _SeatChooseList() {
-  return Container(
-    height: 600,
-    child: ListView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: 11,
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index) {
-        return _SeatChoose();
-      },
-    ),
-  );
-}
 
 
