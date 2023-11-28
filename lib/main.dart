@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile11/Home_page/home_page_UI.dart';
 import 'package:pas_mobile11/Login_page/login.dart';
 import 'package:pas_mobile11/splash_page/splash.dart';
+
+import 'Home_page/home.dart';
 
 
 void main() {
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Login(),
+      home: Home(),
     );
   }
 }

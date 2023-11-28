@@ -158,22 +158,22 @@ class Event {
 }
 
 class Accessibility {
-  int ticketLimit;
   String info;
+  int ticketLimit;
 
   Accessibility({
-    required this.ticketLimit,
     required this.info,
+    required this.ticketLimit,
   });
 
   factory Accessibility.fromJson(Map<String, dynamic> json) => Accessibility(
-    ticketLimit: json["ticketLimit"],
     info: json["info"],
+    ticketLimit: json["ticketLimit"],
   );
 
   Map<String, dynamic> toJson() => {
-    "ticketLimit": ticketLimit,
     "info": info,
+    "ticketLimit": ticketLimit,
   };
 }
 
@@ -255,7 +255,7 @@ class Genre {
 
 class Dates {
   Start start;
-  Timezone timezone;
+  String timezone;
   Status status;
   bool spanMultipleDays;
 
@@ -268,14 +268,14 @@ class Dates {
 
   factory Dates.fromJson(Map<String, dynamic> json) => Dates(
     start: Start.fromJson(json["start"]),
-    timezone: timezoneValues.map[json["timezone"]]!,
+    timezone: json["timezone"],
     status: Status.fromJson(json["status"]),
     spanMultipleDays: json["spanMultipleDays"],
   );
 
   Map<String, dynamic> toJson() => {
     "start": start.toJson(),
-    "timezone": timezoneValues.reverse[timezone],
+    "timezone": timezone,
     "status": status.toJson(),
     "spanMultipleDays": spanMultipleDays,
   };
@@ -343,20 +343,6 @@ enum Code {
 
 final codeValues = EnumValues({
   "onsale": Code.ONSALE
-});
-
-enum Timezone {
-  AMERICA_CHICAGO,
-  AMERICA_INDIANAPOLIS,
-  AMERICA_NEW_YORK,
-  AMERICA_PHOENIX
-}
-
-final timezoneValues = EnumValues({
-  "America/Chicago": Timezone.AMERICA_CHICAGO,
-  "America/Indianapolis": Timezone.AMERICA_INDIANAPOLIS,
-  "America/New_York": Timezone.AMERICA_NEW_YORK,
-  "America/Phoenix": Timezone.AMERICA_PHOENIX
 });
 
 class DoorsTimes {
@@ -645,7 +631,7 @@ class Venue {
   List<String> aliases;
   List<Image> images;
   String postalCode;
-  Timezone timezone;
+  String timezone;
   City city;
   State state;
   Country country;
@@ -700,7 +686,7 @@ class Venue {
     aliases: List<String>.from(json["aliases"].map((x) => x)),
     images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
     postalCode: json["postalCode"],
-    timezone: timezoneValues.map[json["timezone"]]!,
+    timezone: json["timezone"],
     city: City.fromJson(json["city"]),
     state: State.fromJson(json["state"]),
     country: Country.fromJson(json["country"]),
@@ -728,7 +714,7 @@ class Venue {
     "aliases": List<dynamic>.from(aliases.map((x) => x)),
     "images": List<dynamic>.from(images.map((x) => x.toJson())),
     "postalCode": postalCode,
-    "timezone": timezoneValues.reverse[timezone],
+    "timezone": timezone,
     "city": city.toJson(),
     "state": state.toJson(),
     "country": country.toJson(),
