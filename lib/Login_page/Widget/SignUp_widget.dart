@@ -16,7 +16,7 @@ class SignUp extends StatelessWidget {
           );
         },
         child: Container(
-          margin: EdgeInsets.only(top: 100),
+          margin: EdgeInsets.only(top: 30),
           child: Text.rich(
             TextSpan(
               children: [

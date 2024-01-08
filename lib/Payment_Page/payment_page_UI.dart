@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile11/Payment_Page/Widget/creditCard.dart';
+import 'package:pas_mobile11/Payment_Page/Widget/payBtn.dart';
+import 'package:pas_mobile11/Payment_Page/Widget/seatData.dart';
+import 'package:pas_mobile11/Payment_Page/Widget/seatPlan.dart';
+import 'package:pas_mobile11/Payment_Page/Widget/ticketCount.dart';
+import 'package:pas_mobile11/Payment_Page/Widget/ticketImg.dart';
+import 'package:pas_mobile11/Payment_Page/Widget/txtPay.dart';
+import 'package:pas_mobile11/Payment_Page/Widget/txtPaymentMethod.dart';
+import 'package:pas_mobile11/Payment_Page/Widget/txtSubTtl.dart';
 import '../Component/color_component.dart';
-import 'package:get/get.dart';
+import 'Widget/txtTicket.dart';
 
 class PaymentPage extends StatelessWidget {
   final String selectedValue;
@@ -35,11 +44,11 @@ class PaymentPage extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.only(left: 20),
-                child: _BackBtn(context),
+                child: BackButton(color: Colors.white,),
               ),
               Container(
-                margin: EdgeInsets.only(left: 100),
-                child: _TheaterTitle(),
+                margin: EdgeInsets.only(left: 0,top: 2),
+                child: TxtPaymen(),
               )
             ],
           ),
@@ -49,7 +58,7 @@ class PaymentPage extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              child: _TicketPic(),
+              child: TicketImage(),
             ),
             Container(
               decoration: BoxDecoration(
@@ -60,11 +69,11 @@ class PaymentPage extends StatelessWidget {
                 children: [
                   Container(
                     padding: EdgeInsets.all(20),
-                      child: _SeatingPlan()
+                      child: SeatPlan()
                   ),
                   Container(
-                    padding: EdgeInsets.all(15),
-                    child: _SeatData(),
+                    padding: EdgeInsets.only(right: 20),
+                    child: SeatData(),
                   )
                 ],
               ),
@@ -83,13 +92,13 @@ class PaymentPage extends StatelessWidget {
                 children: [
                   Container(
                     padding: EdgeInsets.all(10),
-                      child: _TicketCount()),
+                      child: txtTicketCount()),
                   Container(
                     padding: EdgeInsets.all(15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        _txtTicket(),
+                        TxtTicket(),
                         SizedBox(height: 5),
                         Text(selectedValue,
                           style: TextStyle(
@@ -119,10 +128,10 @@ class PaymentPage extends StatelessWidget {
                 children: [
                   Container(
                       padding: EdgeInsets.all(10),
-                      child: _Pay()),
+                      child: TxtPayMeth()),
                   Container(
                       padding: EdgeInsets.all(10),
-                      child: _PaymentBtn()),
+                      child: TxtCreditCard()),
                 ],
               ),
             )
@@ -137,7 +146,7 @@ class PaymentPage extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: Offset(0, -3), // negative offset to cast shadow only at the top
+              offset: Offset(0, -3),
             ),
           ],
         ),
@@ -153,7 +162,7 @@ class PaymentPage extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _txtSubtotal(),
+                      TxtSub(),
                       SizedBox(height: 5),
                       Text(selectedValue,
                         style: TextStyle(
@@ -178,212 +187,11 @@ class PaymentPage extends StatelessWidget {
               ),
             ),
             Center(
-              child: _PayBtn()
+              child: PayBtn()
             ),
           ],
         ),
       ),
     );
   }
-}
-
-Widget _BackBtn(BuildContext context) {
-  return IconButton(
-    icon: Icon(
-      Icons.arrow_back_ios_new,
-      size: 24,
-      color: Colors.white,
-    ),
-    onPressed: () {
-      Future.delayed(Duration(milliseconds: 500), () {
-        Get.back();
-      });
-    },
-  );
-}
-Widget _TheaterTitle() {
-  return Center(
-    child: Text(
-      "Payment",
-      style: TextStyle(
-        fontSize: 18,
-        color: Colors.white,
-        fontWeight: FontWeight.w500,
-      ),
-    ),
-  );
-}
-Widget _TicketPic(){
-  return Container(
-    child: Image(
-      image: AssetImage("assets/image/hamilton.jpg"),
-      fit: BoxFit.cover,
-    ),
-  );
-}
-Widget _SeatingPlan() {
-  return Container(
-    decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/image/seat.png"),
-          fit: BoxFit.cover,
-        )
-      ),
-    width: 120,
-    height: 120,
-  );
-}
-Widget _SeatData(){
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.end,
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Container(
-        child: Text(
-          'Verified Resale Ticket',
-          textAlign: TextAlign.right,
-          style: TextStyle(
-            fontSize: 16,
-            color: MyColors.txtLocateTct,
-          ),
-        ),
-      ),
-      SizedBox(height: 5),
-      Container(
-        child: Text(
-          'BALCONY',
-          textAlign: TextAlign.right,
-          style: TextStyle(
-            fontSize: 14,
-            color: MyColors.txtLocateTct,
-          ),
-        ),
-      ),
-      SizedBox(height: 5),
-      Container(
-        child: Text(
-          'Sec BALC-R, Row S, Seats 366-368',
-          textAlign: TextAlign.right,
-          style: TextStyle(
-            fontSize: 14,
-            color: MyColors.txtLocateTct,
-          ),
-        ),
-      ),
-    ],
-  );
-}
-Widget _TicketCount(){
-  return Row(
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            child: Text(
-              'Verified Resale Ticket',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                fontSize: 14,
-                color: MyColors.txtLocateTct,
-              ),
-            ),
-          ),
-          SizedBox(height: 5),
-          Container(
-            child: Text(
-              '\$107.00',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                fontSize: 16,
-                color: MyColors.txtJdlTheater,
-                fontWeight: FontWeight.w500
-              ),
-            ),
-          ),
-        ],
-      )
-    ],
-  );
-}
-Widget _txtTicket(){
-  return Container(
-    child: Text(
-      'Ticket',
-      textAlign: TextAlign.right,
-      style: TextStyle(
-        fontSize: 14,
-        color: MyColors.txtLocateTct,
-      ),
-    ),
-  );
-}
-Widget _Pay(){
-  return Container(
-    child: Text(
-      'Payment Method',
-      style: TextStyle(
-        fontSize: 16,
-        color: MyColors.txtJdlTheater,
-        fontWeight: FontWeight.w500
-      ),
-    ),
-  );
-}
-Widget _PaymentBtn(){
-  return Container(
-    child: Row(
-      children: [
-        Container(
-          child: Text(
-            'Credit Card',
-            style: TextStyle(
-                fontSize: 16,
-                color: MyColors.txtJdlTheater,
-                fontWeight: FontWeight.w500
-            ),
-          ),
-        ),
-        Icon(
-          Icons.arrow_forward_ios,
-          size: 24,
-          color: MyColors.txtJdlTheater,
-        ),
-      ],
-    ),
-  );
-}
-Widget _txtSubtotal(){
-  return Container(
-    margin: EdgeInsets.only(top: 15),
-    child: Text(
-      'Subtotal',
-      style: TextStyle(
-          fontSize: 17,
-          color: MyColors.txtJdlTheater,
-          fontWeight: FontWeight.w500
-      ),
-    ),
-  );
-}
-Widget _PayBtn(){
-  return Container(
-    margin: EdgeInsets.only(top: 10),
-    height: 50,
-    width: 250,
-    decoration: BoxDecoration(
-        color: MyColors.ocean,
-        borderRadius: BorderRadius.circular(10)
-    ),
-    child: Center(
-      child: Text(
-        'Pay',
-        style: TextStyle(
-            fontSize: 18,
-            color: Colors.white,
-            fontWeight: FontWeight.w700
-        ),
-      ),
-    ),
-  );
 }

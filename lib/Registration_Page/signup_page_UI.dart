@@ -32,7 +32,7 @@ class SignUpPage extends StatelessWidget {
                   SizedBox(height: 40),
                   UsernPassEmail(),
                   SizedBox(height: 10),
-                  SizedBox(height: 120),
+                  SizedBox(height: 50),
                   Login()
                 ],
               ),

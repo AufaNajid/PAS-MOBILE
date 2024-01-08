@@ -4,6 +4,7 @@ import '../../Component/color_component.dart';
 import '../../Home_page/home_page_UI.dart';
 import '../../Tester/api_service.dart';
 import 'ForgotPass_widget.dart';
+import 'package:pas_mobile11/Login_page/controllerlogin/controllerLogin.dart';
 
 
 class UsernPass extends StatefulWidget {
@@ -14,6 +15,7 @@ class UsernPass extends StatefulWidget {
 }
 
 class _UsernPassState extends State<UsernPass> {
+  LoginPageController controller = Get.put(LoginPageController());
   final ApiService apiService = ApiService();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -27,10 +29,10 @@ class _UsernPassState extends State<UsernPass> {
       children: [
         Container(
           child: TextField(
-            controller: usernameController,
+            controller: controller.emailTextEditingController,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
-              labelText: 'Username',
+              labelText: 'Email',
               labelStyle: TextStyle(color: Colors.white),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white),
@@ -41,7 +43,7 @@ class _UsernPassState extends State<UsernPass> {
         Container(
           margin: EdgeInsets.only(top: 20),
           child: TextField(
-            controller: passwordController,
+            controller: controller.passwordTextEditingController,
             obscureText: true,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
@@ -57,15 +59,16 @@ class _UsernPassState extends State<UsernPass> {
         SizedBox(height: 100),
         Center(
           child: ElevatedButton(
-            onPressed: () {
-              if (usernameController.text == "admin" &&
-                  passwordController.text == "admin") {
-                Get.off(() => HomePage());
-              } else {
-                setState(() {
-                  errorMessage = 'Invalid username or password';
-                });
-              }
+            onPressed: () async {{
+                if(!(controller.emailTextEditingController.text == "" && controller.passwordTextEditingController.text == "")){
+                  await controller.login(
+                      controller.emailTextEditingController.text, controller.passwordTextEditingController.text);
+                  Get.off(HomePage());
+                } else {
+                  controller.message.value = "Please fill username and password";
+                  controller.successfulLogin.value = false;
+                }
+              };
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(MyColors.ocean),

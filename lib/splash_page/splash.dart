@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:pas_mobile11/Constant/Constant.dart';
-import 'package:pas_mobile11/Home_page/home.dart';
+import 'package:pas_mobile11/Component/color_component.dart';
+import 'package:pas_mobile11/Login_page/login.dart';
+import 'package:pas_mobile11/Login_page/login_page_UI.dart';
 
-class Spalsh extends StatelessWidget {
-  const Spalsh({Key? key}) : super(key: key);
+class Splash extends StatelessWidget {
+  const Splash({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +15,10 @@ class Spalsh extends StatelessWidget {
           Image.asset('assets/image/splash.png'),
         ],
       ),
-      backgroundColor: AppConstantColor.backgroundColor,
-      nextScreen: Home(),
+      backgroundColor: MyColors.background,
+      nextScreen: LoginPage(),
       splashIconSize: 250,
-      duration: 4000,
+      duration: 3000,
     );
   }
 }

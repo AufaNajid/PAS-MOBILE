@@ -10,4 +10,6 @@ class MyColors {
   static const Color txtJdlTheater = Color(0xFF222222);
   static const Color txtLocateTct = Color(0xFF5F5F5F);
   static const Color txtSortBy = Color(0xFF295768);
+  static const Color HoverNav = Color(0xFF073C51);
+  static const Color Logout = Color(0xFF4A1717);
 }

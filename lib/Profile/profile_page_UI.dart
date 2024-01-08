@@ -3,7 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pas_mobile11/Home_page/home_page_UI.dart';
+import 'package:pas_mobile11/Login_page/login_page_UI.dart';
+import 'package:pas_mobile11/Notification_Page/notification_page.dart';
+import 'package:pas_mobile11/Registration_Page/signup_page_UI.dart';
 import '../Component/color_component.dart';
+import '../Your_Ticket/TicketPage.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -52,7 +56,7 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 5),
             _LastSeen(),
             SizedBox(height: 5),
-            _Logout()
+            LogoutWidget()
           ],
         ),
       ),
@@ -112,8 +116,8 @@ Widget _NavBottom() {
             children: [
               InkWell(
                 onTap: () {
-                  Get.back(
-                        result: () => HomePage(),
+                  Get.to(
+                        () => HomePage(),
                   );
                 },
                 child: Container(
@@ -125,21 +129,35 @@ Widget _NavBottom() {
                   ),
                 ),
               ),
-              Container(
-                child: RotatedBox(
-                  quarterTurns: 1,
-                  child: Icon(
-                    Icons.local_activity,
-                    size: 31,
-                    color: Colors.white,
+              InkWell(
+                onTap: () {
+                  Get.to(
+                        () => TicketPage(),
+                  );
+                },
+                child: Container(
+                  child: RotatedBox(
+                    quarterTurns: 1,
+                    child: Icon(
+                      Icons.local_activity,
+                      size: 31,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-              Container(
-                child: Icon(
-                  Icons.notifications,
-                  size: 35,
-                  color: Colors.white,
+              InkWell(
+                onTap: () {
+                  Get.to(
+                        () => Notif_Page(),
+                  );
+                },
+                child: Container(
+                  child: Icon(
+                    Icons.notifications,
+                    size: 35,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               Container(
@@ -325,45 +343,66 @@ Widget _LastSeen(){
     ),
   );
 }
-Widget _Logout(){
-  return Container(
-    height: 60,
-    margin: EdgeInsets.only(left: 40,right: 40),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          child: Row(
-            children: [
-              Container(
-                child: Icon(
-                  Icons.logout_outlined,
-                  size: 32,
-                  color: MyColors.logout,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 12),
-                child: Text(
-                  'Logout',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: MyColors.logout,
-                      fontWeight: FontWeight.w500
+class LogoutWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      margin: EdgeInsets.only(left: 40, right: 40),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            child: Row(
+              children: [
+                Container(
+                  child: Icon(
+                    Icons.logout_outlined,
+                    size: 32,
+                    color: MyColors.Logout,
                   ),
                 ),
-              )
-            ],
+                InkWell(
+                  onTap: () {
+                    _showLogoutConfirmationDialog(context);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(left: 12),
+                    child: Text(
+                      'Logout',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: MyColors.Logout,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-        Container(
-          child: Icon(
-            Icons.arrow_forward_ios,
-            size: 26,
-            color: MyColors.logout,
+          Container(
+            child: Icon(
+              Icons.arrow_forward_ios,
+              size: 26,
+              color: MyColors.Logout,
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
+
+  void _showLogoutConfirmationDialog(BuildContext context) {
+    Get.defaultDialog(
+      title: "Logout",
+      middleText: "Are you sure you want to logout?",
+      textConfirm: "Yes",
+      textCancel: "No",
+      confirmTextColor: Colors.white,
+      onConfirm: () {
+        Get.off(LoginPage());
+      },
+    );
+  }
 }

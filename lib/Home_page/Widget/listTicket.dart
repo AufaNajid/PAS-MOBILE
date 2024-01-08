@@ -78,7 +78,7 @@ class ListTicket extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: 10, top: 15),
+                              margin: EdgeInsets.only(left: 10, top: 5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -94,7 +94,7 @@ class ListTicket extends StatelessWidget {
                                               .start
                                               .localDate,
                                           style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 16,
                                             fontWeight: FontWeight.w700,
                                             color: MyColors.ocean,
                                           ),
@@ -136,7 +136,6 @@ class ListTicket extends StatelessWidget {
                   },
                 )),
               );
-
             } else {
               return Text('No tickets available');
             }

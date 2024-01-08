@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Home_page/home_page_UI.dart';
-import '../../Tester/api_service.dart';
+import 'package:pas_mobile11/Login_page/login_page_UI.dart';
 import '../../Component/color_component.dart';
+import 'package:pas_mobile11/Registration_Page/controller/registerController.dart';
 
 class UsernPassEmail extends StatefulWidget {
   const UsernPassEmail({Key? key}) : super(key: key);
@@ -13,13 +12,22 @@ class UsernPassEmail extends StatefulWidget {
 }
 
 class _UsernPassEmailState extends State<UsernPassEmail> {
-  final ApiService apiService = ApiService();
+  RegisterPageController controller = Get.put(RegisterPageController());
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
 
   String errorMessage = '';
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,34 +76,34 @@ class _UsernPassEmailState extends State<UsernPassEmail> {
             ),
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(top: 10),
-          child: TextField(
-            controller: confirmPasswordController,
-            obscureText: true,
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-              labelText: 'Confirm Password',
-              labelStyle: TextStyle(color: Colors.white),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
-              ),
-            ),
-          ),
-        ),
         SizedBox(height: 50),
         Center(
           child: InkWell(
-            onTap: () {
-              Get.off(() => HomePage());
+            onTap: () async {
+              if (!(emailController.text == "" && passwordController.text == "")) {
+                await controller.signin(
+                  usernameController.text,
+                  emailController.text,
+                  passwordController.text,
+                );
+                // Clear input fields
+                usernameController.clear();
+                emailController.clear();
+                passwordController.clear();
+                confirmPasswordController.clear();
+                // Navigate to LoginPage
+                Get.off(LoginPage());
+              } else if (controller.successfulRegister.value) {
+                controller.message.value = "Please fill username and password";
+                controller.successfulRegister.value = false;
+              }
             },
             child: Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
                   color: MyColors.ocean,
-                  borderRadius: BorderRadius.circular(30)
-              ),
+                  borderRadius: BorderRadius.circular(30)),
               child: Center(
                 child: Text(
                   'Sign Up',
